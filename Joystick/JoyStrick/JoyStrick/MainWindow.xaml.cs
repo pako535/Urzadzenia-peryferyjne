@@ -36,7 +36,7 @@ namespace JoyStrick
         DirectInput Input = new DirectInput();
         private SlimDX.DirectInput.Joystick stick;
         private Joystick[] Sticks;
-        //private void CheckJoy;
+    
         private bool mouseClicked = false;
         private int yvalue = 0;
         private int xvalue = 0;
@@ -51,7 +51,7 @@ namespace JoyStrick
         private const int MOUSEEVENT_LEFTDOWN = 0x02;
         private const int MOUSEEVENT_LEFTUP = 0x04;
 
-        //static extern bool AllocConsole();
+       
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -60,9 +60,8 @@ namespace JoyStrick
 
         private static void SetCursor(int x, int y)
         {
-            // Left boundary
+            // Powrócenie kursora myszy do początkowego położenia
             var xL = (int)App.Current.MainWindow.Left;
-            // Top boundary
             var yT = (int)App.Current.MainWindow.Top;
 
             SetCursorPos(x + xL, y + yT); //
@@ -72,29 +71,28 @@ namespace JoyStrick
         public void CheckJoy()
         {
 
-            // Initialize DirectInput
+            
             var directInput = new DirectInput();
 
-            // Find a Joystick Guid
+            
             var joystickGuid = Guid.Empty;
             List<string> names = new List<string>();
-            //string name = "nei am";
+           
 
             foreach (var deviceInstance in directInput.GetDevices(DeviceType.Gamepad,
                         DeviceEnumerationFlags.AllDevices))
             {
                 joystickGuid = deviceInstance.InstanceGuid;
-                names.Add( deviceInstance.InstanceName);
+                names.Add( deviceInstance.InstanceName);    // dodanie Gamepad'a do listy urządzeń
                     }
-            // If Gamepad not found, look for a Joystick
-            //if (joystickGuid == Guid.Empty)
+            
                 foreach (var deviceInstance in directInput.GetDevices(DeviceType.Joystick,
                         DeviceEnumerationFlags.AllDevices))
                 {
                     joystickGuid = deviceInstance.InstanceGuid;
-                    names.Add(deviceInstance.InstanceName);
+                    names.Add(deviceInstance.InstanceName); // dodanie Joysticka do listy urządzeń
                 }
-            // If Joystick not found, throws an error
+            // Jeśli Joystick lub Gamepad nie jest podłączony wyświetl powiadomienie o braku podłączonych urządzeń
             if (joystickGuid == Guid.Empty)
             {
 
@@ -104,9 +102,7 @@ namespace JoyStrick
             }
             else
             {
-                // AllocConsole();
-                //Console.WriteLine("Found Joystick/Gamepad with GUID: {0}", joystickGuid);
-                //String cos = joystickGuid.GetType();
+               // wypisz wszystkie Gamepady i Joysticki
                 foreach (string i in names)
                 {
                     MessageBox.Show(i);
@@ -116,7 +112,7 @@ namespace JoyStrick
             }
            
         }
-
+        // funkcja pobierająca informacje o przyciskach
         public Joystick[] GetSticks()
         {
             var sticks = new List<Joystick>();
