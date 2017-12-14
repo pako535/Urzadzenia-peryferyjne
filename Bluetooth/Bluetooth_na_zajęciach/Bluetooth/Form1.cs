@@ -30,7 +30,7 @@ namespace Bluetooth
             textBoxConsole.ReadOnly = true;
         
         }
-
+        // Funkcja wyszukująca urządzenia oraz ich typ i adres
         private void ScanDevices()
         {
             try
@@ -70,7 +70,7 @@ namespace Bluetooth
             }
 
         }
-
+        // funkcja która wywołuje szukanie urządzeń po kliknięciu przycisku
         private void buttonFindDevices_Click(object sender, EventArgs e)
         {
             Thread findDevices = new Thread(ScanDevices);
@@ -92,10 +92,9 @@ namespace Bluetooth
             }
         }
 
+        // Funkcja pozwalająca na odbieranie plików
         private void ReceiveFiles()
         {
-           // textBoxConsole.Text += ("Odbieranie plików aktywne.\r\n");
-
             while (isPaired)
             {
                 var listener = new ObexListener(ObexTransport.Bluetooth);
@@ -109,7 +108,7 @@ namespace Bluetooth
                 listener.Stop();
             }
         }
-
+        //Funkcja parująca urządzenia
         private void PairWithDevice()
         {
             foreach(var device in devices)
@@ -147,7 +146,7 @@ namespace Bluetooth
                 }
             }
         }
-
+        //Funkcja rozparowująca urządzenia
         private void Unpair()
         {
             if (deviceToPair.DeviceName == listBoxConnected.SelectedItem.ToString())
@@ -185,6 +184,7 @@ namespace Bluetooth
             openFile.ShowDialog();
         }
 
+        //Funkcja pozwalająca na wybranie pliku który chcemy wysłać
         private void openFile_FileOk(object sender, CancelEventArgs e)
         {
             bool exist = false;
@@ -210,7 +210,7 @@ namespace Bluetooth
 
  
 
-
+        // Funkcja wysyłająca plik do sparowanego urządzenia
         private void SendFiles()
         {
             foreach(string file in listBoxFiles.Items)
